@@ -1,0 +1,69 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "https://gregtech.overminddl1.com/"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            url = "https://mvnrepository.com/artifact/com.squareup.okio/okio"
+        }
+        maven {
+            url = "https://mvnrepository.com/artifact/org.json/json"
+        }
+        maven {
+            url = "https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp"
+        }
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+
+compileJava.options.encoding = 'UTF-8'
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+version = "impact"
+group= "alexiil.mods.load" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "LoadingScreen"
+
+minecraft {
+    version = "1.7.10-10.13.4.1614-1.7.10"
+    runDir = "eclipse"
+    replace "@COMMIT_HASH@", System.getenv("DRONE_COMMIT")?: "manual build"
+}
+
+dependencies {
+    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.6.0'
+    compile group: 'org.json', name: 'json', version: '20190722'
+    compile group: 'com.squareup.okio', name: 'okio', version: '2.6.0'
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+jar {
+    manifest {
+        attributes 'FMLCorePluginContainsFMLMod': 'true'
+        attributes 'FMLCorePlugin': 'alexiil.mods.load.coremod.LoadingScreenLoadPlugin'
+    }
+}

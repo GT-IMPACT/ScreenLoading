@@ -1,0 +1,11 @@
+[
+{
+  "modid": "betterloadingscreen",
+  "name": "Loading Screen",
+  "description": "A better loading screen that shows you the status of minecraft's loading time",
+  "version": "impact",
+  "mcversion": "1.7.10",
+  "authorList": ["AlexIIL", "4gname"],
+  "dependencies": []
+}
+]

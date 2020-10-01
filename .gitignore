@@ -1,0 +1,17 @@
+/bin/
+/testing/
+/.gradle/
+/.project
+/.classpath
+/.settings/
+/eclipse/
+/serverTest/
+/build/
+BetterLoadingScreen.iml
+BetterLoadingScreen.ipr
+BetterLoadingScreen.iws
+*.bat
+/out
+*.iml
+*.ipr
+*.iws
